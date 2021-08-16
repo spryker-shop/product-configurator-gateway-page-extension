@@ -7,14 +7,13 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
 /**
- * @deprecated Use {@link \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface} instead.
- *
- * Use this plugin to resolve back page url from the given configurator response.
+ * Use this plugin to process the response from the product configurator and get the return page URL.
  */
-interface ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
+interface ProductConfiguratorResponseStrategyPluginInterface
 {
     /**
      * Specification:
@@ -30,13 +29,20 @@ interface ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
 
     /**
      * Specification:
-     * - Returns back URL for the provided configuration response.
+     * - Processes a product configurator response.
+     * - Resolves back URL for configurator response.
+     * - If validation success than `isSuccessful` flag equals to true.
+     * - Returns error messages when validation failed and `isSuccessful` flag equals to false.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    public function resolveBackUrl(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer): string;
+    public function processProductConfiguratorResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer;
 }
